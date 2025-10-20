@@ -1,28 +1,27 @@
-# 🚀 Job Lander Browser Extension
+# Job Lander Browser Extension
 
 > A sophisticated Chrome extension that automates job application tracking by intelligently capturing data from job postings and syncing it with the Job Lander platform.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/your-repo)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/zeyadsalah22/Job-Lander-Extension)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Chrome](https://img.shields.io/badge/chrome-extension-yellow.svg)](https://chrome.google.com/webstore)
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [Overview](#-overview)
-- [Architecture](#-architecture)
-- [Key Features](#-key-features)
-- [Installation & Setup](#-installation--setup)
-- [User Guide](#-user-guide)
-- [Technical Details](#-technical-details)
-- [Development](#-development)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Key Features](#key-features)
+- [Installation & Setup](#installation--setup)
+- [User Guide](#user-guide)
+- [Technical Details](#technical-details)
+- [Project Structure](#project-structure)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
-## 🎯 Overview
+## Overview
 
 The Job Lander Browser Extension is an intelligent automation tool designed to streamline the job application tracking process. It eliminates manual data entry by automatically extracting job details from posting pages, detecting interview questions as users fill out application forms, and syncing everything to the Job Lander platform in real-time.
 
@@ -37,15 +36,15 @@ Job seekers often struggle with:
 ### Solution
 
 Our extension provides:
-- ✅ **Automated data capture** from 95%+ of job sites
-- ✅ **Real-time question detection** as you fill out forms
-- ✅ **One-click application saving** with all metadata
-- ✅ **Seamless sync** with your Job Lander dashboard
-- ✅ **Progressive tracking** that adapts to any application workflow
+- **Automated data capture** from 95%+ of job sites
+- **Real-time question detection** as you fill out forms
+- **One-click application saving** with all metadata
+- **Seamless sync** with your Job Lander dashboard
+- **Progressive tracking** that adapts to any application workflow
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### High-Level System Architecture
 
@@ -136,9 +135,9 @@ sequenceDiagram
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 1. **Intelligent Multi-Strategy Job Data Extraction**
+### 1. Intelligent Multi-Strategy Job Data Extraction
 
 The extension uses a sophisticated **cascading fallback strategy** to ensure maximum compatibility across job sites:
 
@@ -174,18 +173,18 @@ flowchart TD
 ```
 
 **Supported Platforms**:
-- ✅ **LinkedIn Jobs** - Full support with location detection
-- ✅ **Indeed** - All variants and country sites
-- ✅ **Glassdoor** - Two-column layout handling
-- ✅ **WhiteCarrot** - Vue.js SPA support
-- ✅ **Greenhouse** - Full ATS integration
-- ✅ **Lever** - Complete ATS support
-- ✅ **Workday** - myworkdayjobs.com sites
-- ✅ **Ashby** - Modern ATS platform
-- ✅ **SmartRecruiters** - Full coverage
-- ✅ **95%+ of custom career pages** - Universal fallback
+- **LinkedIn Jobs** - Full support with location detection
+- **Indeed** - All variants and country sites
+- **Glassdoor** - Two-column layout handling
+- **WhiteCarrot** - Vue.js SPA support
+- **Greenhouse** - Full ATS integration
+- **Lever** - Complete ATS support
+- **Workday** - myworkdayjobs.com sites
+- **Ashby** - Modern ATS platform
+- **SmartRecruiters** - Full coverage
+- **95%+ of custom career pages** - Universal fallback
 
-### 2. **Progressive Application Tracking**
+### 2. Progressive Application Tracking
 
 The extension adapts to multi-step application processes:
 
@@ -217,60 +216,40 @@ stateDiagram-v2
     end note
 ```
 
-### 3. **Smart Question Detection**
+### 3. Smart Question Detection
 
 Automatically identifies and captures interview questions with intelligent filtering:
 
-- ✅ **Minimum length**: Only saves answers ≥100 characters
-- ✅ **Real-time status**: Color-coded UI feedback (green = will save, yellow = too short)
-- ✅ **Manual addition**: Users can add custom questions
-- ✅ **Live editing**: Questions and answers editable in sidebar
-- ✅ **Smart filtering**: Excludes name/email/phone fields
+- **Minimum length**: Only saves answers ≥100 characters
+- **Real-time status**: Color-coded UI feedback (green = will save, yellow = too short)
+- **Manual addition**: Users can add custom questions
+- **Live editing**: Questions and answers editable in sidebar
+- **Smart filtering**: Excludes name/email/phone fields
 
-### 4. **Interactive Sidebar UI**
+### 4. Interactive Sidebar UI
 
-```mermaid
-graph LR
-    A[Sidebar] --> B[Header<br/>Draggable]
-    A --> C[Job Details<br/>Editable Fields]
-    A --> D[Dropdowns<br/>Company & CV]
-    A --> E[Questions List<br/>Color-coded]
-    A --> F[Footer<br/>Actions]
-    
-    B --> B1[Collapse/Expand]
-    B --> B2[Drag Left/Right]
-    
-    E --> E1[Green = ≥100 chars]
-    E --> E2[Yellow = 1-99 chars]
-    E --> E3[Gray = Empty]
-    
-    F --> F1[Save Button]
-    F --> F2[Cancel Button]
-    
-    style A fill:#7571f9,color:#fff
-    style B fill:#667eea,color:#fff
-    style E fill:#764ba2,color:#fff
-```
+The sidebar provides a persistent, non-intrusive interface for tracking applications:
 
-**UX Features**:
-- 🎯 **Collapsible**: Minimize to header-only view
-- 🎯 **Draggable**: Move between left and right screen edges
-- 🎯 **Non-intrusive**: Stays on top, doesn't block page content
-- 🎯 **Real-time updates**: Instant feedback on all changes
+- **Collapsible**: Minimize to header-only view
+- **Draggable**: Move between left and right screen edges
+- **Non-intrusive**: Stays on top, doesn't block page content
+- **Real-time updates**: Instant feedback on all changes
+- **Editable fields**: Modify job details, questions, and answers
+- **Dropdown selectors**: Choose company and CV before saving
 
-### 5. **Popup Dashboard**
+### 5. Popup Dashboard
 
 The extension popup provides quick access to:
 
-- 📊 **Statistics**: Total applications, pending, interviews, offers
-- 📋 **Recent Applications**: Last 5 applications with status
-- 🎯 **Weekly Goals**: Set and track application targets
-- 🔍 **Quick Search**: One-click access to job boards
-- 👤 **User Profile**: Personalized welcome with user's first name
+- **Statistics**: Total applications, pending, interviews, offers
+- **Recent Applications**: Last 5 applications with status
+- **Weekly Goals**: Set and track application targets
+- **Quick Search**: One-click access to job boards
+- **User Profile**: Personalized welcome with user's first name
 
 ---
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 
@@ -283,8 +262,8 @@ The extension popup provides quick access to:
 
 ### Step 1: Install Dependencies
 
-```bash
-cd job-lander-extension
+   ```bash
+   cd job-lander-extension
 npm install
 ```
 
@@ -312,9 +291,9 @@ const FRONTEND_URL = 'https://your-frontend-url.com'; // Update this
 
 ### Step 3: Build the Extension
 
-```bash
-npm run build
-```
+   ```bash
+   npm run build
+   ```
 
 **Build outputs**:
 - `dist/popup.js` - Popup UI bundle
@@ -338,7 +317,7 @@ npm run build
 
 ---
 
-## 📖 User Guide
+## User Guide
 
 ### First-Time Setup
 
@@ -397,12 +376,12 @@ journey
 
 The popup has three tabs:
 
-#### 📊 Overview Tab
+#### Overview Tab
 - View application statistics (total, pending, interviews, offers)
 - See your last 5 applications with status badges
 - Quick link to full dashboard
 
-#### 🔍 Quick Search Tab
+#### Quick Search Tab
 - One-click access to:
   - LinkedIn Jobs
   - Indeed
@@ -410,7 +389,7 @@ The popup has three tabs:
   - Monster
   - ZipRecruiter
 
-#### 🎯 Goals Tab
+#### Goals Tab
 - Set weekly application targets
 - Track progress with visual progress bar
 - View completion percentage
@@ -418,7 +397,7 @@ The popup has three tabs:
 
 ---
 
-## 🔧 Technical Details
+## Technical Details
 
 ### Authentication Flow
 
@@ -494,152 +473,28 @@ flowchart LR
 
 ### Core Components
 
-#### 1. **Page Detector** (`pageDetector.js`)
+The extension consists of seven main components:
 
-**Responsibility**: Monitor URL changes and detect page types
+#### 1. Page Detector (`pageDetector.js`)
+Monitors URL changes and detects page types (job posting, application form, completion) using MutationObserver and History API interception.
 
-**Technologies**:
-- MutationObserver (DOM changes)
-- History API interception (SPA navigation)
-- Event listeners (popstate, hashchange)
+#### 2. Job Data Extractor (`jobDataExtractor.js`)
+Extracts job data using a cascading strategy: JSON-LD structured data → Site-specific selectors → Meta tags → Smart DOM analysis. Includes smart truncation (7000 chars), location detection with scoring, and salary pattern matching.
 
-**Detected Page Types**:
-- Job posting page
-- Application form page
-- Application complete page
+#### 3. Application Tracker (`applicationTracker.js`)
+Main orchestrator that coordinates the tracking workflow. Initializes on page load, extracts job data, fetches companies and CVs, displays sidebar, monitors form inputs, and validates before saving.
 
-```javascript
-// Example: Detecting LinkedIn job postings
-isJobPostingPage() {
-  const url = window.location.href.toLowerCase();
-  if (url.includes('linkedin.com/jobs/view')) return true;
-  if (url.includes('ashbyhq.com')) return true;
-  // ... more patterns
-}
-```
+#### 4. Sidebar Manager (`sidebarManager.js`)
+Manages the persistent sidebar UI with collapsible header, horizontal dragging, real-time updates, color-coded status indicators, and manual question addition.
 
-#### 2. **Job Data Extractor** (`jobDataExtractor.js`)
+#### 5. Data Collector (`dataCollector.js`)
+Detects questions and captures answers from form inputs. Filters out common fields (email, phone, name) and only stores answers ≥100 characters using MutationObserver for dynamic forms.
 
-**Responsibility**: Extract job data using multiple strategies
+#### 6. Background Service Worker (`background.js`)
+Handles API communication, token management, authentication, message routing between components, and notification management.
 
-**Extraction Strategies** (in order):
-
-1. **JSON-LD**: `<script type="application/ld+json">` with schema.org
-2. **Site-Specific**: Custom selectors for major sites
-3. **Meta Tags**: OpenGraph and Twitter Card metadata
-4. **Smart DOM**: Content scoring algorithm
-
-**Key Methods**:
-- `extract()` - Main entry point, tries all strategies
-- `extractFromSiteSpecific()` - Platform-specific logic
-- `findJobDescription()` - Scoring algorithm for descriptions
-- `normalize()` - Standardize and truncate data (7000 chars)
-
-**Special Features**:
-- Smart truncation at word boundaries
-- Location detection with scoring system (LinkedIn)
-- Company name fallback (prevents "Glassdoor" as company)
-- Salary pattern matching
-
-#### 3. **Application Tracker** (`applicationTracker.js`)
-
-**Responsibility**: Main orchestrator for tracking workflow
-
-**Lifecycle**:
-1. Initialize on page load
-2. Show "Start Tracking" button on job pages
-3. Extract initial job data
-4. Fetch companies and CVs from backend
-5. Display sidebar
-6. Monitor form inputs for questions
-7. Validate and save application
-
-**Validation Rules**:
-- Company and CV must be selected
-- Job title and company name required
-- Questions must have answers ≥100 characters
-
-#### 4. **Sidebar Manager** (`sidebarManager.js`)
-
-**Responsibility**: Manage sidebar UI and interactions
-
-**Features**:
-- Gradient purple header with drag handle
-- Collapsible (header-only mode)
-- Horizontal dragging (left ↔ right)
-- Real-time question updates
-- Color-coded status indicators
-- Manual question addition
-
-**CSS Positioning**:
-```css
-#job-lander-sidebar {
-  position: fixed;
-  z-index: 999998;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.jl-position-left { left: 0; }
-.jl-position-right { right: 0; }
-```
-
-#### 5. **Data Collector** (`dataCollector.js`)
-
-**Responsibility**: Detect questions and capture answers
-
-**Detection Logic**:
-- Scans for textareas and text inputs
-- Filters out common fields (email, phone, name)
-- Only stores answers ≥100 characters
-- Uses MutationObserver for dynamic forms
-- Debounces input events (500ms)
-
-**Question Identification**:
-```javascript
-findQuestionText(element) {
-  // Look for labels, legends, or nearby text
-  const label = element.closest('label');
-  const legend = element.closest('fieldset')?.querySelector('legend');
-  // ... more heuristics
-}
-```
-
-#### 6. **Background Service Worker** (`background.js`)
-
-**Responsibility**: API communication and messaging hub
-
-**Key Functions**:
-- Token management (retrieve, validate, refresh)
-- API request wrapper with authentication
-- Message routing between popup and content scripts
-- Notification management
-
-**Supported Message Types**:
-- `GET_COMPANIES` - Fetch user's companies
-- `GET_CVS` - Fetch user's CVs
-- `SAVE_TRACKED_APPLICATION` - Save application + questions
-- `GET_USER_DATA` - Get authenticated user info
-- `LOGOUT` - Clear authentication
-
-#### 7. **Popup Dashboard** (`Dashboard.jsx`)
-
-**Responsibility**: Extension popup UI
-
-**Tabs**:
-1. **Overview**: Stats cards, recent applications
-2. **Quick Search**: Job board links
-3. **Goals**: Weekly goal management with CRUD operations
-
-**State Management**:
-- React hooks (useState, useEffect)
-- Local state for UI (tabs, forms)
-- API calls through `apiManager`
-
-**Goal Management**:
-- Create: `POST /api/weekly-goals`
-- Read: `GET /api/weekly-goals/stats`
-- Update: `PUT /api/weekly-goals/{id}`
-- Delete: `DELETE /api/weekly-goals/{id}`
+#### 7. Popup Dashboard (`Dashboard.jsx`)
+React-based popup UI with three tabs (Overview, Quick Search, Goals) providing statistics, quick links, and weekly goal management via CRUD operations.
 
 ### Data Models
 
@@ -697,9 +552,7 @@ findQuestionText(element) {
 
 ---
 
-## 💻 Development
-
-### Project Structure
+## Project Structure
 
 ```
 job-lander-extension/
@@ -739,125 +592,9 @@ job-lander-extension/
     └── background.js
 ```
 
-### Build Commands
-
-```bash
-# Development build with watch mode
-npm run dev
-
-# Production build (minified)
-npm run build
-
-# Start dev server (for popup testing)
-npm run start
-```
-
-### Development Workflow
-
-```mermaid
-graph LR
-    A[Edit Code] --> B[npm run build]
-    B --> C[Reload Extension]
-    C --> D[Test on Job Site]
-    D --> E{Works?}
-    E -->|No| F[Check Console]
-    F --> A
-    E -->|Yes| G[Commit Changes]
-    
-    style A fill:#7571f9,color:#fff
-    style G fill:#10b981,color:#fff
-```
-
-### Adding Support for New Job Sites
-
-To add custom extraction for a new site:
-
-1. **Add site detection** in `applicationTracker.js`:
-
-```javascript
-isJobPostingPage() {
-  // Add your site pattern
-  if (url.includes('newsite.com/jobs/')) return true;
-}
-```
-
-2. **Add custom extractor** in `jobDataExtractor.js`:
-
-```javascript
-extractFromSiteSpecific() {
-  const hostname = window.location.hostname;
-  
-  if (hostname.includes('newsite.com')) {
-    return this.extractFromNewSite();
-  }
-  // ... existing extractors
-}
-
-extractFromNewSite() {
-  return {
-    jobTitle: this.getTextContent('.job-title-selector'),
-    companyName: this.getTextContent('.company-selector'),
-    location: this.getTextContent('.location-selector'),
-    jobDescription: this.getHTMLFromSelectors(['.description']),
-    salary: this.getTextContent('.salary-selector'),
-    jobType: this.getTextContent('.job-type-selector')
-  };
-}
-```
-
-3. **Test thoroughly**:
-   - Navigate to the site
-   - Check console logs (`Job Lander: Using NewSite-specific extraction`)
-   - Verify extracted data accuracy
-
-### Debugging
-
-#### Console Logs
-
-All components log with `Job Lander:` prefix:
-
-```javascript
-console.log('Job Lander: Extracting job data...');
-console.log('Job Lander: Found 3 questions');
-console.log('Job Lander: Application saved successfully');
-```
-
-#### Debug Locations
-
-| Component | Console Location |
-|-----------|------------------|
-| Content Scripts | Page console (F12 on job site) |
-| Background Script | Extension service worker console |
-| Popup | Popup console (right-click popup → Inspect) |
-
-#### Common Debug Commands
-
-```javascript
-// In page console (on job site):
-window.jobLanderExtractor?.extract() // Test extraction
-
-// In background script console:
-chrome.storage.local.get(null, console.log) // View stored data
-```
-
-### Testing Checklist
-
-Before committing changes:
-
-- [ ] Build succeeds without errors
-- [ ] Extension loads in Chrome without warnings
-- [ ] Popup opens and displays correctly
-- [ ] Authentication works (login/logout)
-- [ ] Job data extracts correctly on 5+ sites
-- [ ] Questions are detected in real-time
-- [ ] Sidebar UI is responsive (collapse, drag)
-- [ ] Applications save successfully to backend
-- [ ] Console has no errors
-- [ ] Weekly goals CRUD operations work
-
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -898,7 +635,7 @@ npm run build
 - Check URL matches patterns in `isJobPostingPage()`
 - Open console on job page, look for errors
 - Verify content scripts are injecting:
-  ```javascript
+```javascript
   // Should see these logs:
   "Job Lander: Page detector initialized"
   "Job Lander: Application tracker initialized"
@@ -964,140 +701,6 @@ npm install
 
 ---
 
-## 🤝 Contributing
-
-### Contribution Workflow
-
-```mermaid
-gitGraph
-    commit id: "main"
-    branch feature/new-feature
-    checkout feature/new-feature
-    commit id: "Implement feature"
-    commit id: "Add tests"
-    commit id: "Update docs"
-    checkout main
-    merge feature/new-feature
-    commit id: "Release v1.1.0"
-```
-
-### Guidelines
-
-1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make your changes**:
-   - Write clean, documented code
-   - Follow existing code style
-   - Add console logs for debugging
-4. **Test thoroughly**:
-   - Test on 5+ different job sites
-   - Verify popup UI works
-   - Check all message types
-5. **Update documentation**:
-   - Update README if adding features
-   - Add JSDoc comments to new functions
-6. **Commit with clear messages**:
-   ```bash
-   git commit -m "feat: Add support for NewSite job board"
-   git commit -m "fix: Resolve question detection on dynamic forms"
-   ```
-7. **Push and create Pull Request**
-
-### Code Style
-
-- **JavaScript**: ES6+ syntax, use `const`/`let`
-- **React**: Functional components with hooks
-- **CSS**: TailwindCSS utility classes
-- **Comments**: Explain "why", not "what"
-- **Naming**: Descriptive, camelCase for variables/functions
-
-### Commit Message Format
-
-```
-<type>: <description>
-
-[optional body]
-
-[optional footer]
-```
-
-**Types**:
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation only
-- `style`: Code style (formatting, no logic change)
-- `refactor`: Code restructuring
-- `test`: Add/update tests
-- `chore`: Maintenance tasks
-
----
-
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
-
----
-
-## 📞 Support
-
-### Resources
-
-- 📚 **Documentation**: You're reading it!
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/your-repo/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-repo/discussions)
-- 📧 **Email**: support@joblander.com
-
-### Frequently Asked Questions
-
-**Q: Does this work on Firefox?**  
-A: Not yet. Firefox support planned for future releases.
-
-**Q: Is my data secure?**  
-A: Yes. All data is transmitted over HTTPS and stored securely in your Job Lander account. Tokens are stored using Chrome's encrypted storage API.
-
-**Q: Can I use this on private/incognito mode?**  
-A: Yes, but you'll need to enable "Allow in Incognito" in `chrome://extensions/`.
-
-**Q: Does this work on company ATS systems?**  
-A: Yes! We support Greenhouse, Lever, Workday, Ashby, and most other ATS platforms with intelligent fallbacks.
-
-**Q: How accurate is the extraction?**  
-A: 95%+ accuracy on major job boards, 85%+ on custom career pages. You can always edit extracted data before saving.
-
----
-
-## 🎯 Roadmap
-
-### Upcoming Features
-
-- [ ] Firefox extension support
-- [ ] Safari extension support
-- [ ] Offline mode with sync queue
-- [ ] AI-powered answer suggestions
-- [ ] Application status tracking from email
-- [ ] LinkedIn Easy Apply automation
-- [ ] Custom extraction rules UI
-- [ ] Export to CSV/Excel
-- [ ] Browser notifications for application deadlines
-
----
-
-## 🙏 Acknowledgments
-
-Built with ❤️ for job seekers everywhere.
-
-**Technologies**:
-- React Team (UI framework)
-- Chrome Extensions Team (Platform APIs)
-- TailwindCSS Team (Styling system)
-- All open-source contributors
-
----
-
-<div align="center">
-
-**[⬆ Back to Top](#-job-lander-browser-extension)**
-
-Made with 💜 by the Job Lander Team
-
-</div>
