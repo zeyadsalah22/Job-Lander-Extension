@@ -28,7 +28,7 @@ The Job Lander Browser Extension is an intelligent automation tool designed to s
 ### Problem Statement
 
 Job seekers often struggle with:
-- **Manual data entry**: Copying job details from postings to tracking spreadsheets
+- **Manual data entry**: Copying job details from postings to the tracking application
 - **Lost information**: Forgetting which questions were asked during applications
 - **Time waste**: Spending minutes on each application just for record-keeping
 - **Inconsistent tracking**: Missing details or forgetting to log applications
@@ -354,21 +354,21 @@ journey
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  Job Site Page                                     Sidebar   │
+│  Job Site Page                                    Sidebar   │
 │  ┌─────────────────────────┐              ┌──────────────┐  │
 │  │  Software Engineer      │              │  Job Details │  │
-│  │  Company XYZ            │  ───────────>│  ✓ Extracted │  │
-│  │  San Francisco, CA      │              │  ✓ Editable  │  │
+│  │  Company XYZ            │  ───────────>│  Extracted   │  │
+│  │  San Francisco, CA      │              │  Editable    │  │
 │  │  [Apply Now]            │              │              │  │
 │  └─────────────────────────┘              │  Questions   │  │
-│                                            │  🟢 Q1 (150) │  │
-│  ┌─────────────────────────┐              │  🟡 Q2 (50)  │  │
+│                                           │     Q1 (150) │  │
+│  ┌─────────────────────────┐              │     Q2 (50)  │  │
 │  │  Application Form       │  ───────────>│              │  │
 │  │  ┌───────────────────┐  │              │  [Save]      │  │
 │  │  │ Why this role?    │  │              └──────────────┘  │
-│  │  │ [Answer here...] │  │                                 │
-│  │  └───────────────────┘  │                                 │
-│  └─────────────────────────┘                                 │
+│  │  │ [Answer here...]  │  │                                │
+│  │  └───────────────────┘  │                                │
+│  └─────────────────────────┘                                │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -591,113 +591,6 @@ job-lander-extension/
     ├── styles.css
     └── background.js
 ```
-
----
-
-## Troubleshooting
-
-### Common Issues
-
-#### 1. Extension Not Loading
-
-**Symptoms**: Extension doesn't appear in toolbar or shows errors
-
-**Solutions**:
-```bash
-# Clean and rebuild
-rm -rf dist/ node_modules/
-npm install
-npm run build
-```
-
-- Check `chrome://extensions/` for error messages
-- Verify `manifest.json` is valid JSON
-- Ensure Chrome version ≥90
-
-#### 2. Authentication Failing
-
-**Symptoms**: "Invalid credentials" or "Token expired"
-
-**Solutions**:
-- Verify API endpoint in `utils/auth.js` is correct
-- Check backend is running and accessible
-- Clear extension storage:
-  ```javascript
-  chrome.storage.local.clear()
-  ```
-- Try logging in through frontend first
-
-#### 3. Data Not Capturing
-
-**Symptoms**: "Start Tracking" button doesn't appear
-
-**Solutions**:
-- Check URL matches patterns in `isJobPostingPage()`
-- Open console on job page, look for errors
-- Verify content scripts are injecting:
-```javascript
-  // Should see these logs:
-  "Job Lander: Page detector initialized"
-  "Job Lander: Application tracker initialized"
-  ```
-
-#### 4. Questions Not Detected
-
-**Symptoms**: Form inputs not appearing in sidebar
-
-**Solutions**:
-- Ensure answers are ≥100 characters (validation requirement)
-- Check if form is in an iframe (not supported)
-- Verify DOM elements are standard `<input>` or `<textarea>` tags
-- Dynamic forms may take 1-2 seconds to detect
-
-#### 5. Sidebar UI Issues
-
-**Symptoms**: Sidebar doesn't appear or looks broken
-
-**Solutions**:
-- Check if page has `z-index` conflicts
-- Verify `jl-visible` class is applied
-- Inspect console for CSS errors
-- Try dragging sidebar to other side
-
-#### 6. Build Errors
-
-**Symptoms**: `npm run build` fails
-
-**Solutions**:
-```bash
-# Check Node version (must be ≥16)
-node --version
-
-# Update npm
-npm install -g npm@latest
-
-# Clear cache
-npm cache clean --force
-
-# Reinstall
-rm -rf node_modules package-lock.json
-npm install
-```
-
-### Error Messages
-
-| Error | Cause | Fix |
-|-------|-------|-----|
-| `ENOSPC: no space left on device` | Disk space full | Free up space, clear npm cache |
-| `Manifest version 2 is deprecated` | Wrong manifest version | Use Manifest V3 (already configured) |
-| `Failed to fetch` | Backend unreachable | Check API URL, verify backend running |
-| `Token expired` | JWT expired | Re-authenticate through frontend |
-| `Cannot read property of undefined` | Missing data | Add null checks, use optional chaining |
-
-### Getting Help
-
-1. **Check console logs** (all three: page, background, popup)
-2. **Review this documentation** (especially Architecture section)
-3. **Inspect network requests** (DevTools → Network tab)
-4. **Test on multiple sites** (issue may be site-specific)
-5. **Check backend logs** (issue may be server-side)
 
 ---
 
