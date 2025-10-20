@@ -1,0 +1,215 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* Moody Blue Brand Colors - Matching Frontend */
+    --primary: 251 89% 74%; /* #7571f9 */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 251 89% 84%;
+    --primary-light: 251 89% 94%;
+    --primary-dark: 251 89% 54%;
+    --primary-darker: 251 70% 45%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 267 91% 67%;
+    --accent-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 267 91% 67%;
+
+    /* Design System Tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-dark)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
+    
+    --shadow-sm: 0 2px 4px -1px hsl(var(--primary) / 0.1);
+    --shadow-md: 0 4px 12px -2px hsl(var(--primary) / 0.15);
+    --shadow-lg: 0 10px 30px -10px hsl(var(--primary) / 0.25);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.4);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Button Variants - Matching Frontend */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium 
+           transition-all duration-300 ease-out
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring 
+           disabled:pointer-events-none disabled:opacity-50;
+  }
+  
+  .btn-primary {
+    @apply btn bg-gradient-to-r from-primary to-primary-dark 
+           text-primary-foreground shadow-md 
+           hover:shadow-glow hover:scale-105;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-muted hover:bg-muted/80 shadow-sm;
+  }
+  
+  .btn-outline {
+    @apply btn border-2 border-primary/20 bg-background shadow-sm 
+           hover:bg-primary/5 hover:border-primary/40 hover:text-foreground;
+  }
+  
+  .btn-ghost {
+    @apply btn hover:bg-muted/50 hover:text-foreground;
+  }
+  
+  .btn-sm {
+    @apply h-8 px-3 text-xs;
+  }
+  
+  .btn-md {
+    @apply h-9 px-4 py-2;
+  }
+  
+  .btn-lg {
+    @apply h-11 px-8 text-base;
+  }
+  
+  .input {
+    @apply flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 
+           text-sm shadow-sm transition-all duration-200
+           file:border-0 file:bg-transparent file:text-sm file:font-medium 
+           placeholder:text-muted-foreground 
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50
+           focus-visible:border-primary
+           disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  
+  /* Card Variants - Matching Frontend */
+  .card {
+    @apply rounded-xl border bg-card text-card-foreground shadow-sm
+           transition-all duration-300 ease-out;
+  }
+  
+  .card-hover {
+    @apply card hover:shadow-lg hover:-translate-y-0.5;
+  }
+  
+  .card-glow {
+    @apply card bg-gradient-to-br from-white to-gray-50 border-gray-200/50
+           shadow-md hover:shadow-xl hover:shadow-primary/10;
+  }
+  
+  .card-header {
+    @apply flex flex-col space-y-1.5 p-6;
+  }
+  
+  .card-title {
+    @apply font-semibold leading-none tracking-tight text-base;
+  }
+  
+  .card-content {
+    @apply p-6 pt-0;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent;
+  }
+
+  /* Stat Card */
+  .stat-card {
+    @apply card-glow p-6 transition-all duration-300 
+           hover:scale-102 hover:shadow-xl cursor-pointer;
+  }
+}
+
+@layer utilities {
+  /* Custom animations - Matching Frontend */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--primary) / 0.4);
+    }
+  }
+
+  .fade-in {
+    animation: fade-in 0.4s ease-out;
+  }
+
+  .scale-in {
+    animation: scale-in 0.3s ease-out;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .hover-scale {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+}

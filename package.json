@@ -1,0 +1,45 @@
+{
+  "name": "job-lander-extension",
+  "version": "1.0.0",
+  "description": "Chrome extension for Job Lander application tracking",
+  "main": "background.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "start": "webpack-dev-server --mode development"
+  },
+  "keywords": [
+    "chrome-extension",
+    "job-tracking",
+    "automation"
+  ],
+  "author": "Job Lander Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.22.0",
+    "@babel/preset-env": "^7.22.0",
+    "@babel/preset-react": "^7.22.0",
+    "babel-loader": "^9.1.0",
+    "clean-css": "^5.3.3",
+    "css-loader": "^6.8.0",
+    "html-webpack-plugin": "^5.5.0",
+    "postcss": "^8.4.24",
+    "postcss-loader": "^7.3.0",
+    "regexpu-core": "^6.2.0",
+    "style-loader": "^3.3.0",
+    "tailwindcss": "^3.3.0",
+    "unicode-canonical-property-names-ecmascript": "^2.0.1",
+    "unicode-match-property-ecmascript": "^2.0.0",
+    "unicode-match-property-value-ecmascript": "^2.2.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0",
+    "webpack-dev-server": "^4.15.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "date-fns": "^2.30.0",
+    "lucide-react": "^0.263.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

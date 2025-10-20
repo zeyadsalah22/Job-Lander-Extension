@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "Job Lander - Application Tracker",
+  "version": "1.0.0",
+  "description": "Automatically capture job application data and sync with Job Lander platform",
+  "permissions": [
+    "storage",
+    "notifications",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*",
+    "https://indeed.com/*",
+    "https://*.indeed.com/*", 
+    "https://www.glassdoor.com/*",
+    "https://*.glassdoor.com/*",
+    "http://localhost:*/*",
+    "https://your-api-domain.com/*",
+    "*://*/*"
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "dist/content-scripts/jobDataExtractor.js",
+        "dist/content-scripts/sidebarManager.js",
+        "dist/content-scripts/pageDetector.js",
+        "dist/content-scripts/dataCollector.js",
+        "dist/content-scripts/applicationTracker.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "dist/popup/index.html",
+    "default_title": "Job Lander Extension",
+    "default_icon": {
+      "16": "assets/icon-16.png",
+      "32": "assets/icon-32.png",
+      "48": "assets/icon-48.png",
+      "128": "assets/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icon-16.png",
+    "32": "assets/icon-32.png",
+    "48": "assets/icon-48.png",
+    "128": "assets/icon-128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
