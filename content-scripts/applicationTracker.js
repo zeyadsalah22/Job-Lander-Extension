@@ -36,11 +36,42 @@ class ApplicationTracker {
     this.init();
   }
 
-  init() {
-    // Only initialize on job posting pages
-    if (this.isJobPostingPage()) {
+  async init() {
+    // Check if there's an active tracking session from a previous tab/redirect
+    await this.checkForActiveTracking();
+    
+    // Only initialize on job posting pages if not already tracking
+    if (!this.isTracking && this.isJobPostingPage()) {
       this.addStartTrackingButton();
       console.log('Job Lander: Application tracker initialized on job posting page');
+    }
+  }
+  
+  async checkForActiveTracking() {
+    try {
+      const result = await chrome.storage.local.get(['activeTracking']);
+      
+      if (result.activeTracking && result.activeTracking.isActive) {
+        console.log('Job Lander: Found active tracking session, restoring...');
+        
+        // Restore the application data
+        this.applicationData = {
+          ...this.applicationData,
+          ...result.activeTracking.data
+        };
+        
+        // Convert userAnswers back to Map
+        if (result.activeTracking.userAnswersArray) {
+          this.applicationData.userAnswers = new Map(result.activeTracking.userAnswersArray);
+        }
+        
+        // Start tracking with restored data
+        await this.startTracking(true); // Pass true to indicate it's a restore
+        
+        console.log('Job Lander: Tracking session restored successfully');
+      }
+    } catch (error) {
+      console.error('Job Lander: Error checking for active tracking:', error);
     }
   }
 
@@ -134,7 +165,7 @@ class ApplicationTracker {
     document.body.appendChild(button);
   }
 
-  async startTracking() {
+  async startTracking(isRestore = false) {
     try {
       this.isTracking = true;
       
@@ -144,8 +175,10 @@ class ApplicationTracker {
         startButton.style.display = 'none';
       }
       
-      // 1. Collect initial job posting data
-      await this.collectJobPostingData();
+      // 1. Collect initial job posting data (skip if restoring)
+      if (!isRestore) {
+        await this.collectJobPostingData();
+      }
       
       // 2. Initialize other components
       await this.initializeComponents();
@@ -157,11 +190,49 @@ class ApplicationTracker {
       this.pageDetector.startMonitoring();
       this.dataCollector.startQuestionTracking();
       
+      // 5. Save tracking state to storage for persistence across redirects
+      await this.saveTrackingState();
+      
       console.log('Job Lander: Application tracking started', this.applicationData);
+      
+      if (isRestore) {
+        this.sidebarManager.showSuccess('Tracking session restored! Continue filling out your application.');
+      }
       
     } catch (error) {
       console.error('Job Lander: Error starting tracking:', error);
       this.showErrorNotification('Failed to start tracking. Please try again.');
+    }
+  }
+  
+  async saveTrackingState() {
+    try {
+      // Convert Map to array for storage
+      const userAnswersArray = Array.from(this.applicationData.userAnswers.entries());
+      
+      const trackingData = {
+        isActive: true,
+        timestamp: new Date().toISOString(),
+        data: {
+          ...this.applicationData,
+          userAnswers: undefined // Remove Map object
+        },
+        userAnswersArray: userAnswersArray
+      };
+      
+      await chrome.storage.local.set({ activeTracking: trackingData });
+      console.log('Job Lander: Tracking state saved to storage');
+    } catch (error) {
+      console.error('Job Lander: Error saving tracking state:', error);
+    }
+  }
+  
+  async clearTrackingState() {
+    try {
+      await chrome.storage.local.remove('activeTracking');
+      console.log('Job Lander: Tracking state cleared from storage');
+    } catch (error) {
+      console.error('Job Lander: Error clearing tracking state:', error);
     }
   }
 
@@ -172,6 +243,14 @@ class ApplicationTracker {
       this.sidebarManager = new SidebarManager(this);
       this.pageDetector = new PageDetector(this);
       this.dataCollector = new DataCollector(this);
+      
+      // Initialize AutoFillManager if available
+      if (window.AutoFillManager) {
+        this.autoFillManager = new AutoFillManager(this);
+        console.log('Job Lander: AutoFillManager initialized');
+      } else {
+        console.warn('Job Lander: AutoFillManager not available');
+      }
     }
   }
 
@@ -199,7 +278,7 @@ class ApplicationTracker {
     console.log('Job Lander: Collected job posting data', this.applicationData);
   }
 
-  stopTracking() {
+  async stopTracking() {
     this.isTracking = false;
     
     if (this.sidebarManager) {
@@ -211,6 +290,9 @@ class ApplicationTracker {
     if (this.dataCollector) {
       this.dataCollector.stopQuestionTracking();
     }
+    
+    // Clear tracking state from storage
+    await this.clearTrackingState();
     
     // Show start button again
     const startButton = document.getElementById('job-lander-start-tracking');
@@ -285,8 +367,10 @@ class ApplicationTracker {
 
       if (response.success) {
         this.sidebarManager.showSuccess('Application saved successfully!');
-        setTimeout(() => {
-          this.stopTracking();
+        // Clear tracking state immediately
+        await this.clearTrackingState();
+        setTimeout(async () => {
+          await this.stopTracking();
         }, 2000);
       } else {
         throw new Error(response.error || 'Failed to save application');
@@ -329,14 +413,18 @@ class ApplicationTracker {
     }
   }
 
-  updateCompanySelection(companyId) {
+  async updateCompanySelection(companyId) {
     this.applicationData.companyId = companyId;
     console.log('Job Lander: Company selected:', companyId);
+    // Save updated state
+    await this.saveTrackingState();
   }
 
-  updateCvSelection(cvId) {
+  async updateCvSelection(cvId) {
     this.applicationData.submittedCvId = cvId;
     console.log('Job Lander: CV selected:', cvId);
+    // Save updated state
+    await this.saveTrackingState();
   }
 
   showErrorNotification(message) {

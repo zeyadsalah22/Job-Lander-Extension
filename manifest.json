@@ -27,6 +27,9 @@
     {
       "matches": ["<all_urls>"],
       "js": [
+        "dist/content-scripts/eventTriggerManager.js",
+        "dist/content-scripts/inputAdapterManager.js",
+        "dist/content-scripts/autoFillManager.js",
         "dist/content-scripts/jobDataExtractor.js",
         "dist/content-scripts/sidebarManager.js",
         "dist/content-scripts/pageDetector.js",

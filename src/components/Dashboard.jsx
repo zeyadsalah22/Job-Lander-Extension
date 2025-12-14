@@ -268,10 +268,26 @@ const Dashboard = ({ user, onLogout }) => {
   };
 
   const quickSearchSites = [
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/jobs/', icon: '💼' },
-    { name: 'Indeed', url: 'https://indeed.com/', icon: '🔍' },
-    { name: 'Glassdoor', url: 'https://www.glassdoor.com/Job/jobs.htm', icon: '🏢' },
-    { name: 'AngelList', url: 'https://angel.co/jobs', icon: '👼' }
+    { 
+      name: 'LinkedIn', 
+      url: 'https://www.linkedin.com/jobs/', 
+      icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+    },
+    { 
+      name: 'Indeed', 
+      url: 'https://indeed.com/', 
+      icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#2164F3"><path d="M11.566 21.5v-8.535a1.02 1.02 0 00-1.019-1.018H9.484a1.02 1.02 0 00-1.018 1.018V21.5c0 .563.456 1.019 1.018 1.019h1.063c.562 0 1.019-.456 1.019-1.019zM13.7 10.748a2.893 2.893 0 002.9-2.842c.01-1.57-1.257-2.843-2.833-2.873a2.863 2.863 0 00-2.93 2.873 2.893 2.893 0 002.862 2.842zm1.564 1.784h-3.213c-.572 0-1.036.464-1.036 1.037v7.95c0 .573.464 1.037 1.036 1.037h3.213c.572 0 1.036-.464 1.036-1.036V13.57c0-.573-.464-1.037-1.036-1.037z"/></svg>
+    },
+    { 
+      name: 'Glassdoor', 
+      url: 'https://www.glassdoor.com/Job/jobs.htm', 
+      icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#0CAA41"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5h7V16h-7v1.5zM13 10H6.5V8.5h7V10zm3.5 3.5h-7V12h7v1.5z"/></svg>
+    },
+    { 
+      name: 'AngelList', 
+      url: 'https://angel.co/jobs', 
+      icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#000000"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
+    }
   ];
 
   if (loading) {
@@ -486,7 +502,7 @@ const Dashboard = ({ user, onLogout }) => {
                     onClick={() => openJobSite(site.url)}
                     className="btn btn-outline btn-md justify-start space-x-3 h-12"
                   >
-                    <span className="text-lg">{site.icon}</span>
+                    {site.icon}
                     <span>{site.name}</span>
                   </button>
                 ))}

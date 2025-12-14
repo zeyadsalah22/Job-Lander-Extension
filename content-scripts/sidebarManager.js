@@ -175,8 +175,9 @@ class SidebarManager {
                 </svg>
               </button>
               <button class="jl-close-btn" data-action="close" title="Close">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18 6L6 18M6 6l12 12"/>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
               </button>
             </div>
@@ -205,7 +206,12 @@ class SidebarManager {
 
           <!-- Job Data Section -->
           <div class="jl-section">
-            <h4>📋 Job Information</h4>
+            <h4>
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+              </svg>
+              Job Information
+            </h4>
             <div class="jl-field-group">
               <div class="jl-field">
                 <label for="jl-job-title-input">Job Title:</label>
@@ -232,7 +238,12 @@ class SidebarManager {
 
           <!-- User Selections -->
           <div class="jl-section">
-            <h4>⚙️ Application Settings</h4>
+            <h4>
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94L14.4 2.81c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+              </svg>
+              Application Settings
+            </h4>
             <div class="jl-field-group">
               <div class="jl-field">
                 <label for="jl-company-select">Select Company *</label>
@@ -268,7 +279,12 @@ class SidebarManager {
 
           <!-- Questions Section -->
           <div class="jl-section">
-            <h4>❓ Detected Questions (<span id="jl-question-count">0</span>)</h4>
+            <h4>
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+              </svg>
+              Detected Questions (<span id="jl-question-count">0</span>)
+            </h4>
             <div class="jl-questions-info">
               <div class="jl-info-banner">
                 <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
@@ -287,6 +303,32 @@ class SidebarManager {
                 </div>
               </div>
             </div>
+            
+            <!-- Auto-Fill Button -->
+            <button class="jl-btn jl-btn-auto-fill" data-action="auto-fill" style="margin-bottom: 8px;">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M7.5 5.6L5 7l1.4-2.5L5 2l2.5 1.4L10 2 8.6 4.5 10 7 7.5 5.6zm12 9.8L22 14l-1.4 2.5L22 19l-2.5-1.4L17 19l1.4-2.5L17 14l2.5 1.4zM22 2l-1.4 2.5L22 7l-2.5-1.4L17 7l1.4-2.5L17 2l2.5 1.4L22 2zm-8.66 10.78l2.44-2.44-2.12-2.12-2.44 2.44-1.41-1.41 2.44-2.44-2.12-2.12L7.7 7.13 6.29 5.71 8.73 3.27 6.61 1.15 3.27 4.49l2.12 2.12-2.44 2.44 1.41 1.41 2.44-2.44 2.12 2.12-2.44 2.44 1.41 1.41 2.44-2.44 2.12 2.12-2.44 2.44 1.41 1.41 2.44-2.44 2.12 2.12-2.44 2.44z"/>
+              </svg>
+              Auto-Fill Answers (AI)
+            </button>
+            
+            <!-- Auto-Fill Progress Indicator (hidden by default) -->
+            <div class="jl-auto-fill-progress" id="jl-auto-fill-progress" style="display: none;">
+              <div class="jl-progress-header">
+                <span class="jl-progress-title">Auto-Filling...</span>
+                <button class="jl-btn-cancel-auto-fill" data-action="cancel-auto-fill" title="Cancel">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+              <div class="jl-progress-bar-container">
+                <div class="jl-progress-bar-fill" id="jl-progress-bar-fill" style="width: 0%"></div>
+              </div>
+              <p class="jl-progress-text" id="jl-progress-text">Preparing...</p>
+            </div>
+            
             <button class="jl-btn jl-btn-add-question" data-action="add-question">
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
@@ -991,6 +1033,124 @@ class SidebarManager {
          width: 16px;
          height: 16px;
        }
+       
+       /* ============== AUTO-FILL STYLES ============== */
+       
+       /* Auto-fill button */
+       .jl-btn-auto-fill {
+         width: 100%;
+         margin-bottom: 12px;
+         padding: 12px 16px;
+         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+         border: none;
+         color: white;
+         font-size: 14px;
+         font-weight: 600;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         gap: 8px;
+         cursor: pointer;
+         border-radius: 8px;
+         transition: all 0.2s;
+         box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+       }
+       
+       .jl-btn-auto-fill:hover:not(:disabled) {
+         transform: translateY(-1px);
+         box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+       }
+       
+       .jl-btn-auto-fill:disabled {
+         opacity: 0.5;
+         cursor: not-allowed;
+       }
+       
+       .jl-btn-auto-fill svg {
+         width: 16px;
+         height: 16px;
+       }
+       
+       /* Auto-fill progress container */
+       .jl-auto-fill-progress {
+         background: #f8fafc;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 12px;
+         margin-bottom: 12px;
+       }
+       
+       .jl-progress-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         margin-bottom: 8px;
+       }
+       
+       .jl-progress-title {
+         font-size: 13px;
+         font-weight: 600;
+         color: #374151;
+       }
+       
+       .jl-btn-cancel-auto-fill {
+         background: rgba(239, 68, 68, 0.1);
+         border: none;
+         color: #ef4444;
+         width: 24px;
+         height: 24px;
+         border-radius: 4px;
+         cursor: pointer;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         transition: all 0.2s;
+         padding: 0;
+       }
+       
+       .jl-btn-cancel-auto-fill:hover {
+         background: rgba(239, 68, 68, 0.2);
+         transform: scale(1.1);
+       }
+       
+       /* Progress bar */
+       .jl-progress-bar-container {
+         width: 100%;
+         height: 6px;
+         background: #e5e7eb;
+         border-radius: 3px;
+         overflow: hidden;
+         margin-bottom: 8px;
+       }
+       
+       .jl-progress-bar-fill {
+         height: 100%;
+         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+         border-radius: 3px;
+         transition: width 0.3s ease-in-out;
+         box-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
+       }
+       
+       .jl-progress-text {
+         font-size: 12px;
+         color: #6b7280;
+         margin: 0;
+         text-align: center;
+       }
+       
+       /* Auto-fill animations */
+       @keyframes jl-pulse {
+         0%, 100% {
+           opacity: 1;
+         }
+         50% {
+           opacity: 0.7;
+         }
+       }
+       
+       .jl-auto-fill-progress.jl-active {
+         animation: jl-pulse 2s ease-in-out infinite;
+       }
      `;
 
      const styleSheet = document.createElement('style');
@@ -1055,6 +1215,22 @@ class SidebarManager {
     if (addQuestionBtn) {
       addQuestionBtn.addEventListener('click', () => {
         this.showAddQuestionForm();
+      });
+    }
+
+    // Auto-fill button
+    const autoFillBtn = this.sidebar.querySelector('[data-action="auto-fill"]');
+    if (autoFillBtn) {
+      autoFillBtn.addEventListener('click', () => {
+        this.handleAutoFill();
+      });
+    }
+
+    // Cancel auto-fill button
+    const cancelAutoFillBtn = this.sidebar.querySelector('[data-action="cancel-auto-fill"]');
+    if (cancelAutoFillBtn) {
+      cancelAutoFillBtn.addEventListener('click', () => {
+        this.handleCancelAutoFill();
       });
     }
   }
@@ -1265,8 +1441,9 @@ class SidebarManager {
           <div class="jl-question-header">
             <span class="jl-question-number">#${index + 1}</span>
             <button class="jl-question-remove" data-action="remove-question" data-question-id="${question.id}" title="Remove question">
-              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18 6L6 18M6 6l12 12"/>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
             </button>
           </div>
@@ -1291,9 +1468,9 @@ class SidebarManager {
           
           <div class="jl-question-status" data-question-id="${question.id}">
             ${answer.length >= 100 
-              ? `✅ Will be saved (${answer.length} chars)` 
+              ? `<svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="display: inline-block; vertical-align: middle; margin-right: 2px;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Will be saved (${answer.length} chars)` 
               : answer.length > 0 
-                ? `⚠️ Too short (${answer.length}/100 chars)`
+                ? `<svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="display: inline-block; vertical-align: middle; margin-right: 2px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg> Too short (${answer.length}/100 chars)`
                 : 'No answer yet'}
           </div>
         </div>
@@ -1402,15 +1579,15 @@ class SidebarManager {
         
         if (answerLength >= 100) {
           colorClass = 'will-save';
-          statusText = `✅ Will be saved (${answerLength} chars)`;
+          statusText = `<svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="display: inline-block; vertical-align: middle; margin-right: 2px;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Will be saved (${answerLength} chars)`;
         } else if (answerLength > 0) {
           colorClass = 'too-short';
-          statusText = `⚠️ Too short (${answerLength}/100 chars)`;
+          statusText = `<svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="display: inline-block; vertical-align: middle; margin-right: 2px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg> Too short (${answerLength}/100 chars)`;
         }
         
         // Update the status element
         statusElement.className = 'jl-question-status';
-        statusElement.textContent = statusText;
+        statusElement.innerHTML = statusText;
         
         // Update the parent question item class
         questionElement.className = `jl-question-item ${colorClass}`;
@@ -1491,6 +1668,132 @@ class SidebarManager {
         messageEl.parentNode.removeChild(messageEl);
       }
     }, 5000);
+  }
+
+  // ============== AUTO-FILL METHODS ==============
+
+  /**
+   * Handle auto-fill button click
+   */
+  async handleAutoFill() {
+    if (!this.tracker || !this.tracker.autoFillManager) {
+      this.showError('Auto-fill system not initialized');
+      return;
+    }
+
+    // Get questions
+    const questions = Array.from(this.tracker.dataCollector?.detectedQuestions?.values() || []);
+    
+    if (questions.length === 0) {
+      this.showError('No questions detected to fill');
+      return;
+    }
+
+    // Get job data
+    const jobData = this.tracker.applicationData;
+
+    // Show progress UI
+    this.showAutoFillProgress();
+
+    // Disable auto-fill button
+    const autoFillBtn = this.sidebar?.querySelector('[data-action="auto-fill"]');
+    if (autoFillBtn) {
+      autoFillBtn.disabled = true;
+      autoFillBtn.style.opacity = '0.5';
+    }
+
+    try {
+      // Start auto-fill with progress callback
+      const result = await this.tracker.autoFillManager.startAutoFill(
+        questions,
+        jobData,
+        (progress) => this.updateAutoFillProgress(progress)
+      );
+
+      // Hide progress UI
+      this.hideAutoFillProgress();
+
+      // Show result
+      if (result.success) {
+        this.showSuccess(result.message || 'Auto-fill completed successfully!');
+        
+        // Refresh questions UI to show filled answers
+        const updatedQuestions = Array.from(this.tracker.dataCollector.detectedQuestions.values());
+        this.forceUpdateQuestions(updatedQuestions);
+      } else {
+        this.showError(result.error || 'Auto-fill failed');
+      }
+    } catch (error) {
+      console.error('Job Lander: Auto-fill error:', error);
+      this.hideAutoFillProgress();
+      this.showError('Auto-fill error: ' + error.message);
+    } finally {
+      // Re-enable auto-fill button
+      if (autoFillBtn) {
+        autoFillBtn.disabled = false;
+        autoFillBtn.style.opacity = '1';
+      }
+    }
+  }
+
+  /**
+   * Handle cancel auto-fill
+   */
+  handleCancelAutoFill() {
+    if (this.tracker && this.tracker.autoFillManager) {
+      this.tracker.autoFillManager.cancel();
+      this.hideAutoFillProgress();
+      this.showError('Auto-fill cancelled');
+    }
+  }
+
+  /**
+   * Show auto-fill progress UI
+   */
+  showAutoFillProgress() {
+    const progressContainer = this.sidebar?.querySelector('#jl-auto-fill-progress');
+    const autoFillBtn = this.sidebar?.querySelector('[data-action="auto-fill"]');
+    
+    if (progressContainer) {
+      progressContainer.style.display = 'block';
+    }
+    
+    if (autoFillBtn) {
+      autoFillBtn.style.display = 'none';
+    }
+  }
+
+  /**
+   * Hide auto-fill progress UI
+   */
+  hideAutoFillProgress() {
+    const progressContainer = this.sidebar?.querySelector('#jl-auto-fill-progress');
+    const autoFillBtn = this.sidebar?.querySelector('[data-action="auto-fill"]');
+    
+    if (progressContainer) {
+      progressContainer.style.display = 'none';
+    }
+    
+    if (autoFillBtn) {
+      autoFillBtn.style.display = 'flex';
+    }
+  }
+
+  /**
+   * Update auto-fill progress
+   */
+  updateAutoFillProgress(progress) {
+    const progressBar = this.sidebar?.querySelector('#jl-progress-bar-fill');
+    const progressText = this.sidebar?.querySelector('#jl-progress-text');
+    
+    if (progressBar) {
+      progressBar.style.width = progress.percentage + '%';
+    }
+    
+    if (progressText) {
+      progressText.textContent = progress.message || 
+        `Filling ${progress.currentQuestion} of ${progress.totalQuestions} questions...`;
+    }
   }
 }
 

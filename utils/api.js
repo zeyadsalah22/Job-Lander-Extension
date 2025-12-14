@@ -304,6 +304,78 @@ class APIManager {
       return { success: false, error: error.message };
     }
   }
+
+  // ============== AUTO-FILL API METHODS ==============
+
+  /**
+   * Get AI-generated answer for a single question
+   * @param {String} questionText - The question text
+   * @param {String} jobDescription - The job description for context
+   * @param {String} userId - The user ID
+   * @returns {Object} - { success, answer, error }
+   */
+  async getAutoFillAnswer(questionText, jobDescription, userId) {
+    try {
+      console.log('Job Lander: Requesting AI answer for question');
+
+      const response = await this.auth.apiRequest('/auto-fill/answer', {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: userId,
+          question: questionText,
+          jobDescription: jobDescription || ''
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Job Lander: AI answer received');
+        return { success: true, answer: result.answer };
+      } else {
+        const error = await response.json().catch(() => ({ message: 'Unknown error' }));
+        console.error('Job Lander: Failed to get AI answer:', error);
+        return { success: false, error: error.message || 'Failed to get AI answer' };
+      }
+    } catch (error) {
+      console.error('Job Lander: Auto-fill API error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Get AI-generated answers for multiple questions (batched for efficiency)
+   * @param {Array} questions - Array of question texts
+   * @param {String} jobDescription - The job description for context
+   * @param {String} userId - The user ID
+   * @returns {Object} - { success, answers: Array, error }
+   */
+  async getAutoFillAnswersBatch(questions, jobDescription, userId) {
+    try {
+      console.log('Job Lander: Requesting AI answers for', questions.length, 'questions');
+
+      const response = await this.auth.apiRequest('/auto-fill/answers/batch', {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: userId,
+          questions: questions, // Array of question texts
+          jobDescription: jobDescription || ''
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Job Lander: AI answers received:', result.answers?.length || 0);
+        return { success: true, answers: result.answers || [] };
+      } else {
+        const error = await response.json().catch(() => ({ message: 'Batch request failed' }));
+        console.error('Job Lander: Failed to get AI answers batch:', error);
+        return { success: false, error: error.message || 'Batch request failed' };
+      }
+    } catch (error) {
+      console.error('Job Lander: Auto-fill batch API error:', error);
+      return { success: false, error: error.message };
+    }
+  }
 }
 
 // Export singleton instance

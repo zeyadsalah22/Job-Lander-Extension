@@ -52,6 +52,16 @@ class BackgroundManager {
           sendResponse({ success: true, data: dropdownData });
           break;
 
+        case 'AUTO_FILL_GET_ANSWER':
+          const answer = await this.getAutoFillAnswer(message.data);
+          sendResponse({ success: true, data: answer });
+          break;
+
+        case 'AUTO_FILL_GET_ANSWERS_BATCH':
+          const answers = await this.getAutoFillAnswersBatch(message.data);
+          sendResponse({ success: true, data: answers });
+          break;
+
         default:
           sendResponse({ success: false, error: 'Unknown message type' });
       }
@@ -568,6 +578,88 @@ class BackgroundManager {
       return !!token.joblander_token;
     } catch (error) {
       return false;
+    }
+  }
+
+  // ============== AUTO-FILL METHODS ==============
+
+  /**
+   * Get AI-generated answer for a single question
+   */
+  async getAutoFillAnswer(data) {
+    try {
+      const token = await this.getAuthToken();
+      if (!token) {
+        throw new Error('No authentication token available');
+      }
+
+      console.log('Job Lander BG: Requesting AI answer for question');
+
+      const response = await fetch('http://localhost:5253/api/auto-fill/answer', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: data.userId,
+          question: data.question,
+          jobDescription: data.jobDescription || ''
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Job Lander BG: AI answer received');
+        return result.answer || '';
+      } else {
+        const errorText = await response.text();
+        console.error('Job Lander BG: Failed to get AI answer:', response.status, errorText);
+        throw new Error('Failed to get AI answer');
+      }
+    } catch (error) {
+      console.error('Job Lander BG: Auto-fill answer error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get AI-generated answers for multiple questions (batched)
+   */
+  async getAutoFillAnswersBatch(data) {
+    try {
+      const token = await this.getAuthToken();
+      if (!token) {
+        throw new Error('No authentication token available');
+      }
+
+      console.log('Job Lander BG: Requesting AI answers for', data.questions?.length || 0, 'questions');
+
+      const response = await fetch('http://localhost:5253/api/auto-fill/answers/batch', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: data.userId,
+          questions: data.questions || [],
+          jobDescription: data.jobDescription || ''
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Job Lander BG: AI answers received:', result.answers?.length || 0);
+        return result.answers || [];
+      } else {
+        const errorText = await response.text();
+        console.error('Job Lander BG: Failed to get AI answers batch:', response.status, errorText);
+        throw new Error('Failed to get AI answers');
+      }
+    } catch (error) {
+      console.error('Job Lander BG: Auto-fill batch error:', error);
+      throw error;
     }
   }
 }
