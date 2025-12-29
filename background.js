@@ -62,6 +62,11 @@ class BackgroundManager {
           sendResponse({ success: true, data: answers });
           break;
 
+        case 'GET_USER_ID':
+          const userId = await this.getUserId();
+          sendResponse({ success: true, userId: userId });
+          break;
+
         default:
           sendResponse({ success: false, error: 'Unknown message type' });
       }
@@ -581,6 +586,56 @@ class BackgroundManager {
     }
   }
 
+  /**
+   * Get user ID from frontend localStorage or extension storage
+   */
+  async getUserId() {
+    try {
+      const FRONTEND_URL = 'http://localhost:5173';
+      
+      // Try to get from frontend localStorage first
+      const userId = await new Promise((resolve) => {
+        chrome.tabs.query({ url: `${FRONTEND_URL}/*` }, (tabs) => {
+          if (tabs.length > 0) {
+            chrome.scripting.executeScript({
+              target: { tabId: tabs[0].id },
+              func: () => localStorage.getItem('userId')
+            }, (results) => {
+              if (chrome.runtime.lastError) {
+                console.warn('Could not access frontend userId:', chrome.runtime.lastError);
+                resolve(null);
+              } else {
+                resolve(results?.[0]?.result || null);
+              }
+            });
+          } else {
+            resolve(null);
+          }
+        });
+      });
+
+      if (userId) {
+        console.log('Job Lander BG: Got userId from frontend localStorage:', userId);
+        return userId;
+      }
+
+      // Fallback to extension storage (cached from login)
+      const result = await chrome.storage.local.get(['cached_user_data']);
+      const cachedUserId = result.cached_user_data?.userId || null;
+      
+      if (cachedUserId) {
+        console.log('Job Lander BG: Got userId from cached user data:', cachedUserId);
+      } else {
+        console.warn('Job Lander BG: No userId found in frontend or extension storage');
+      }
+      
+      return cachedUserId;
+    } catch (error) {
+      console.error('Job Lander BG: Error getting user ID:', error);
+      return null;
+    }
+  }
+
   // ============== AUTO-FILL METHODS ==============
 
   /**
@@ -595,22 +650,22 @@ class BackgroundManager {
 
       console.log('Job Lander BG: Requesting AI answer for question');
 
-      const response = await fetch('http://localhost:5253/api/auto-fill/answer', {
+      const response = await fetch('http://localhost:5253/api/ai-assistant/generate-answer', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: data.userId,
-          question: data.question,
-          jobDescription: data.jobDescription || ''
+          query: data.question,
+          jobContext: data.jobDescription || '',
+          topK: 50
         }),
       });
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Job Lander BG: AI answer received');
+        console.log('Job Lander BG: AI answer received:', result.success ? 'success' : 'failed');
         return result.answer || '';
       } else {
         const errorText = await response.text();
@@ -625,6 +680,7 @@ class BackgroundManager {
 
   /**
    * Get AI-generated answers for multiple questions (batched)
+   * Since the backend only has a single answer endpoint, we call it multiple times
    */
   async getAutoFillAnswersBatch(data) {
     try {
@@ -635,28 +691,56 @@ class BackgroundManager {
 
       console.log('Job Lander BG: Requesting AI answers for', data.questions?.length || 0, 'questions');
 
-      const response = await fetch('http://localhost:5253/api/auto-fill/answers/batch', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: data.userId,
-          questions: data.questions || [],
-          jobDescription: data.jobDescription || ''
-        }),
-      });
+      const questions = data.questions || [];
+      const jobContext = data.jobDescription || '';
+      const answers = [];
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Job Lander BG: AI answers received:', result.answers?.length || 0);
-        return result.answers || [];
-      } else {
-        const errorText = await response.text();
-        console.error('Job Lander BG: Failed to get AI answers batch:', response.status, errorText);
-        throw new Error('Failed to get AI answers');
+      // Call the API for each question sequentially
+      for (let i = 0; i < questions.length; i++) {
+        const question = questions[i];
+        console.log(`Job Lander BG: Getting answer ${i + 1}/${questions.length}`);
+
+        try {
+          const response = await fetch('http://localhost:5253/api/ai-assistant/generate-answer', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              query: question,
+              jobContext: jobContext,
+              topK: 50
+            }),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            if (result.success && result.answer) {
+              answers.push(result.answer);
+              console.log(`Job Lander BG: Answer ${i + 1} received (${result.answer.length} chars)`);
+            } else {
+              console.warn(`Job Lander BG: Answer ${i + 1} failed - no answer in response`);
+              answers.push(''); // Empty answer on failure
+            }
+          } else {
+            const errorText = await response.text();
+            console.error(`Job Lander BG: Failed to get answer ${i + 1}:`, response.status, errorText);
+            answers.push(''); // Empty answer on failure
+          }
+        } catch (error) {
+          console.error(`Job Lander BG: Error getting answer ${i + 1}:`, error);
+          answers.push(''); // Empty answer on failure
+        }
+
+        // Small delay to avoid overwhelming the API
+        if (i < questions.length - 1) {
+          await new Promise(resolve => setTimeout(resolve, 200));
+        }
       }
+
+      console.log('Job Lander BG: Received', answers.length, 'AI answers');
+      return answers;
     } catch (error) {
       console.error('Job Lander BG: Auto-fill batch error:', error);
       throw error;

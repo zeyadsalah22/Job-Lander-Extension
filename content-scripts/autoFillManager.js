@@ -90,7 +90,7 @@ class AutoFillManager {
       this.totalQuestions = questionsToFill.length;
       this.updateProgress(0, `Processing ${questionsToFill.length} questions...`);
 
-      // Step 4: Request answers from API (batched for efficiency)
+      // Step 4: Request answers from API
       const answers = await this.getAIAnswersBatch(
         questionsToFill, 
         jobData.description || '', 
@@ -206,7 +206,8 @@ class AutoFillManager {
   }
 
   /**
-   * Get AI answers from backend (batched)
+   * Get AI answers from backend
+   * Background script will call the API for each question
    */
   async getAIAnswersBatch(questions, jobDescription, userId) {
     try {
@@ -234,14 +235,13 @@ class AutoFillManager {
   }
 
   /**
-   * Get single AI answer (fallback)
+   * Get single AI answer (fallback - not typically used)
    */
   async getAIAnswer(questionText, jobDescription, userId) {
     try {
       const response = await chrome.runtime.sendMessage({
         type: 'AUTO_FILL_GET_ANSWER',
         data: {
-          userId: userId,
           question: questionText,
           jobDescription: jobDescription
         }
@@ -263,45 +263,23 @@ class AutoFillManager {
    */
   async getUserId() {
     try {
-      // Try to get from frontend localStorage first
-      const userId = await this.getFromLocalStorage('userId');
-      if (userId) {
-        return userId;
+      // Content scripts cannot access chrome.tabs or chrome.scripting APIs
+      // We need to ask the background script to get the userId for us
+      const response = await chrome.runtime.sendMessage({
+        type: 'GET_USER_ID'
+      });
+
+      if (response && response.success && response.userId) {
+        console.log('Job Lander: Got userId from background:', response.userId);
+        return response.userId;
       }
 
-      // Fallback to extension storage
-      const result = await chrome.storage.local.get(['cached_user_data']);
-      return result.cached_user_data?.userId || null;
+      console.warn('Job Lander: Failed to get userId from background');
+      return null;
     } catch (error) {
       console.error('Job Lander: Error getting user ID:', error);
       return null;
     }
-  }
-
-  /**
-   * Get value from frontend localStorage
-   */
-  async getFromLocalStorage(key) {
-    return new Promise((resolve) => {
-      try {
-        const FRONTEND_URL = 'http://localhost:5173';
-        chrome.tabs.query({ url: `${FRONTEND_URL}/*` }, (tabs) => {
-          if (tabs.length > 0) {
-            chrome.scripting.executeScript({
-              target: { tabId: tabs[0].id },
-              func: (storageKey) => localStorage.getItem(storageKey),
-              args: [key]
-            }, (results) => {
-              resolve(results?.[0]?.result || null);
-            });
-          } else {
-            resolve(null);
-          }
-        });
-      } catch (error) {
-        resolve(null);
-      }
-    });
   }
 
   /**
